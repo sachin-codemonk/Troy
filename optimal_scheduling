@@ -1,32 +1,32 @@
 
-//DON :: optimal scheduling algorithm
-#include<iostream.h>
+/// scheduling using different method:::: least recently used  ::
 #include<bits/stdc++.h>
-#define MAX 100
 using namespace std;
-int m=0,n=0,page[MAX]={0},frame[MAX]={-1};
-
-	int pos(int f,int k){
-	for(int i=k;i<n;i++){
-	if(page[i] ==f)
-		return i;
-		}
-	return 999;
-	}
-
+int m=0,frame[10]={-1},ctr[100]={0};
 int find_page(int num){
-for (int i = 0; i < m; ++i)
+for (int i = 0; i < m; i++)
 {
-	if(frame[i]==num)
+	if(frame[i] == num)
 		return 1;
 
 	/* code */
 }
  	return 0;
 }
+void update(int p)
+{
+	for (int i = 0; i < m; ++i)
+	{
+		if(frame[i] == p )
+			ctr[frame[i]] = m;
+		else
+			ctr[frame[i]]--;
+		/* code */
+	}
+}
 
 int main(){
-int ctr[MAX]={0},fault=0;
+int n=0,page[200]={0},fault=0;
 
 printf("Enter the no. of pages and frame_size \n");
 cin>>n>>m;
@@ -35,10 +35,9 @@ cout<<"Enter the pages : ";
 
 for (int i = 0; i < n; ++i)
 {
-	//int p = rand()%10;
-		//page[i] = p;
-	 cin>>page[i];
-		//ctr[p]++;
+	//int p = (int)rand()%10;
+	//	page[i] = p;
+	cin>>page[i];
 	//* code */
 }
 for (int i = 0; i < n; ++i)
@@ -53,53 +52,55 @@ for (int i = 0; i < m; ++i)
 	frame[i] = -1; 
 	/* code */
 }
-	///now page replacement starts :;
-	int min1=0,k;
-	for (int i = 0; i < n; ++i)
-	{
-		if(i<m)
-		{
-			if(find_page(page[i])==1)
-				continue;
+int index  =0,k;
 
-			frame[k++] = page[i];
-			fault++;	
-		}
-		else{
-			int max1 = 0,t;
+for (int i = 0; i < n; ++i)
+{
+	
+	if(index<m){
+		frame[index++] = page[i];
+
+		ctr[page[i]] = index;
+		fault++;
+	}
+	else{
+				//cout<<"HI "<<endl;
+
 			if(find_page(page[i])==1){
-				for (int j = 0; j < m; ++j)
-			{
-				cout<<frame[j]<<"  ";
-				/* code */
-			}
-			cout<<endl;
-			continue;	
-			}
-			else{
-				fault++;
+				//cout<<"HI "<<endl;
+				update(page[i]);
+				}
+		
+		else{
+			 int min1 = 999;
+				//cout << "HERE" << endl;
 				for(int j=0;j<m;j++)
 				{
-					if(max1<pos(frame[j],i))
-					{
-						max1 = pos(frame[j],i);
-						t = j;
+					if(ctr[frame[j]] <= min1 ){
+						min1 = ctr[frame[j]];
+						k = j;
 					}
-
+						//cout<<min1<<" k "<< k<<"  ";
 				}
-				//cout<<max1<<endl;
-				frame[t] = page[i];
-				/// to replace a process from the frame
-			}// end of the second else :)
-		}
-			for (int j = 0; j < m; ++j)
-			{
-				cout<<frame[j]<<"  ";
-				/* code */
-			}
-			cout<<endl;
+				cout<<endl;
+				frame[k] = page[i];
+				ctr[page[i]] = m;
 
-	}///end of the bigger for loop :)
-	cout<<"Faults are : "<<fault;
+
+				update(page[i]);
+				fault++;
+		}
+	}
+	for (int i = 0; i < m; ++i)
+	{
+		cout<<frame[i]<<" : "<<ctr[frame[i]]<<"   " ;
+	}
+	cout<<endl;
+	cout<<fault<<endl;
+}
+cout<<fault<<endl;
 return 0;
 }
+
+
+
