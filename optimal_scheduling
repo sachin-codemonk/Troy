@@ -1,0 +1,103 @@
+
+//DON :: optimal scheduling algorithm
+#include<bits/stdc++.h>
+using namespace std;
+int m=0,n=0,page[200]={0},frame[10]={-1};
+
+	int pos(int f,int k){
+	for(int i=k;i<n;i++){
+	if(page[i] ==f)
+		return i;
+		}
+	return 999;
+	}
+
+int find_page(int num){
+for (int i = 0; i < m; ++i)
+{
+	if(frame[i]==num)
+		return 1;
+
+	/* code */
+}
+ 	return 0;
+}
+
+int main(){
+int ctr[100]={0},fault=0;
+
+printf("Enter the no. of pages and frame_size \n");
+cin>>n>>m;
+
+cout<<"Enter the pages : ";
+
+for (int i = 0; i < n; ++i)
+{
+	//int p = rand()%10;
+		//page[i] = p;
+	 cin>>page[i];
+		//ctr[p]++;
+	//* code */
+}
+for (int i = 0; i < n; ++i)
+{
+	cout<<page[i]<<"  ";
+	/* code */
+}
+cout<<endl;
+
+for (int i = 0; i < m; ++i)
+{
+	frame[i] = -1; 
+	/* code */
+}
+	///now page replacement starts :;
+	int min1=0,k;
+	for (int i = 0; i < n; ++i)
+	{
+		if(i<m)
+		{
+			if(find_page(page[i])==1)
+				continue;
+
+			frame[k++] = page[i];
+			fault++;	
+		}
+		else{
+			int max1 = 0,t;
+			if(find_page(page[i])==1){
+				for (int j = 0; j < m; ++j)
+			{
+				cout<<frame[j]<<"  ";
+				/* code */
+			}
+			cout<<endl;
+			continue;	
+			}
+			else{
+				fault++;
+				for(int j=0;j<m;j++)
+				{
+					if(max1<pos(frame[j],i))
+					{
+						max1 = pos(frame[j],i);
+						t = j;
+					}
+
+				}
+				//cout<<max1<<endl;
+				frame[t] = page[i];
+				/// to replace a process from the frame
+			}// end of the second else :)
+		}
+			for (int j = 0; j < m; ++j)
+			{
+				cout<<frame[j]<<"  ";
+				/* code */
+			}
+			cout<<endl;
+
+	}///end of the bigger for loop :)
+	cout<<"Faults are : "<<fault;
+return 0;
+}
