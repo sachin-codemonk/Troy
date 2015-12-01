@@ -1,8 +1,10 @@
 
 //DON :: optimal scheduling algorithm
+#include<iostream.h>
 #include<bits/stdc++.h>
+#define MAX 100
 using namespace std;
-int m=0,n=0,page[200]={0},frame[10]={-1};
+int m=0,n=0,page[MAX]={0},frame[MAX]={-1};
 
 	int pos(int f,int k){
 	for(int i=k;i<n;i++){
@@ -24,7 +26,7 @@ for (int i = 0; i < m; ++i)
 }
 
 int main(){
-int ctr[100]={0},fault=0;
+int ctr[MAX]={0},fault=0;
 
 printf("Enter the no. of pages and frame_size \n");
 cin>>n>>m;
